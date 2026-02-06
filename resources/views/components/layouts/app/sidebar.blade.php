@@ -14,20 +14,18 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('clients.index')" :current="request()->routeIs('clients.*')" wire:navigate>{{ __('Klienten') }}</flux:navlist.item>
+                    <flux:navlist.item icon="identification" :href="route('staff.index')" :current="request()->routeIs('staff.*')" wire:navigate>{{ __('Mitarbeiter') }}</flux:navlist.item>
+                    <flux:navlist.item icon="user-group" :href="route('groups.index')" :current="request()->routeIs('groups.*')" wire:navigate>{{ __('Gruppen') }}</flux:navlist.item>
+                    <flux:navlist.item icon="document-text" :href="route('daily-logs.index')" :current="request()->routeIs('daily-logs.*')" wire:navigate>{{ __('Tagesdoku') }}</flux:navlist.item>
+                    <flux:navlist.item icon="calendar" :href="route('shifts.index')" :current="request()->routeIs('shifts.*')" wire:navigate>{{ __('Dienstplan') }}</flux:navlist.item>
+                    <flux:navlist.item icon="academic-cap" :href="route('workshops.index')" :current="request()->routeIs('workshops.*')" wire:navigate>{{ __('Workshops') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
             <flux:spacer />
 
-            <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
 
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist>
 
             <!-- Desktop User Menu -->
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">
