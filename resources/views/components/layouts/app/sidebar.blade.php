@@ -12,12 +12,15 @@
             </a>
 
             <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
+                <flux:navlist.group :heading="__('Plattform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                     <flux:navlist.item icon="users" :href="route('clients.index')" :current="request()->routeIs('clients.*')" wire:navigate>{{ __('Klienten') }}</flux:navlist.item>
                     <flux:navlist.item icon="identification" :href="route('staff.index')" :current="request()->routeIs('staff.*')" wire:navigate>{{ __('Mitarbeiter') }}</flux:navlist.item>
                     <flux:navlist.item icon="user-group" :href="route('groups.index')" :current="request()->routeIs('groups.*')" wire:navigate>{{ __('Gruppen') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('daily-logs.index')" :current="request()->routeIs('daily-logs.*')" wire:navigate>{{ __('Tagesdoku') }}</flux:navlist.item>
+                    <flux:navlist.item icon="clipboard-document-list" :href="route('handover.index')" :current="request()->routeIs('handover.*')" wire:navigate>{{ __('Übergabebuch') }}</flux:navlist.item>
+                    <flux:navlist.item icon="check-circle" :href="route('tasks.index')" :current="request()->routeIs('tasks.*')" wire:navigate>{{ __('Aufgaben') }}</flux:navlist.item>
+                    <flux:navlist.item icon="phone" :href="route('contacts.index')" :current="request()->routeIs('contacts.*')" wire:navigate>{{ __('Kontakte') }}</flux:navlist.item>
                     <flux:navlist.item icon="calendar" :href="route('shifts.index')" :current="request()->routeIs('shifts.*')" wire:navigate>{{ __('Dienstplan') }}</flux:navlist.item>
                     <flux:navlist.item icon="academic-cap" :href="route('workshops.index')" :current="request()->routeIs('workshops.*')" wire:navigate>{{ __('Workshops') }}</flux:navlist.item>
                 </flux:navlist.group>
@@ -59,7 +62,7 @@
                     <flux:menu.separator />
 
                     <flux:menu.radio.group>
-                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>{{ __('Einstellungen') }}</flux:menu.item>
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />
@@ -67,7 +70,7 @@
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
                         <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full" data-test="logout-button">
-                            {{ __('Log Out') }}
+                            {{ __('Abmelden') }}
                         </flux:menu.item>
                     </form>
                 </flux:menu>
@@ -109,7 +112,7 @@
                     <flux:menu.separator />
 
                     <flux:menu.radio.group>
-                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                        <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>{{ __('Einstellungen') }}</flux:menu.item>
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />
@@ -117,7 +120,7 @@
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
                         <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full" data-test="logout-button">
-                            {{ __('Log Out') }}
+                            {{ __('Abmelden') }}
                         </flux:menu.item>
                     </form>
                 </flux:menu>

@@ -66,11 +66,11 @@ class extends Component {
                         </td>
                         <td class="px-6 py-4 text-sm whitespace-nowrap text-zinc-500 dark:text-zinc-400">{{ $user->email }}</td>
                         <td class="px-6 py-4 text-sm whitespace-nowrap">
-                            <flux:badge color="{{ $user->role === 'admin' ? 'red' : 'zinc' }}">{{ ucfirst($user->role) }}</flux:badge>
+                            <flux:badge color="{{ $user->role === 'admin' ? 'red' : 'zinc' }}">{{ match($user->role) { 'admin' => 'Admin', default => 'Mitarbeiter' } }}</flux:badge>
                         </td>
                         <td class="px-6 py-4 text-sm whitespace-nowrap text-zinc-500 dark:text-zinc-400">{{ $user->group->name ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm whitespace-nowrap">
-                            <flux:badge color="{{ $user->status === 'active' ? 'green' : 'red' }}">{{ ucfirst($user->status) }}</flux:badge>
+                            <flux:badge color="{{ $user->status === 'active' ? 'green' : 'red' }}">{{ match($user->status) { 'active' => 'Aktiv', 'inactive' => 'Inaktiv', default => $user->status } }}</flux:badge>
                         </td>
                         <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                             <flux:dropdown>

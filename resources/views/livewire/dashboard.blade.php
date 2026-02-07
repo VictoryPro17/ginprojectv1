@@ -30,6 +30,17 @@ class extends Component {
                 ->take(3)
                 ->get(),
             'announcements' => Announcement::with('user')->latest()->take(5)->get(),
+            'upcomingBirthdays' => Client::get()
+                ->filter(fn($c) => $c->dob && (
+                    $c->dob->copy()->year(now()->year)->between(now()->startOfDay(), now()->addDays(30)->endOfDay()) ||
+                    $c->dob->copy()->year(now()->year + 1)->between(now()->startOfDay(), now()->addDays(30)->endOfDay())
+                ))
+                ->sortBy(fn($c) => $c->dob->copy()->year(now()->year)->isPast() ? $c->dob->copy()->year(now()->year + 1) : $c->dob->copy()->year(now()->year))
+                ->take(5),
+            'todaysShifts' => Shift::with('user')
+                ->whereDate('start_time', now())
+                ->orderBy('start_time')
+                ->get(),
         ];
     }
 
@@ -180,41 +191,99 @@ class extends Component {
                 </div>
             </div>
 
-            <!-- Upcoming Workshops -->
-            <div class="space-y-4">
-                 <div class="flex items-center justify-between">
-                    <flux:heading size="lg">Anstehende Workshops</flux:heading>
-                    <flux:button :href="route('workshops.index')" variant="ghost" size="sm" icon="arrow-right">Alle anzeigen</flux:button>
+            <!-- Upcoming Events Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Upcoming Workshops -->
+                <div class="space-y-4">
+                     <div class="flex items-center justify-between">
+                        <flux:heading size="lg">Anstehende Workshops</flux:heading>
+                        <flux:button :href="route('workshops.index')" variant="ghost" size="sm" icon="arrow-right">Alle</flux:button>
+                    </div>
+        
+                    <div class="space-y-3">
+                        @forelse($upcomingWorkshops as $workshop)
+                            <div class="flex items-center p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl shadow-sm">
+                                 <div class="flex-shrink-0 w-12 text-center mr-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+                                    <div class="text-xs text-zinc-500 uppercase">{{ $workshop->date->translatedFormat('M') }}</div>
+                                    <div class="text-lg font-bold text-zinc-900 dark:text-zinc-100">{{ $workshop->date->format('d') }}</div>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-zinc-900 dark:text-zinc-100 truncate w-32">{{ $workshop->title }}</h4>
+                                    <p class="text-xs text-zinc-500">{{ $workshop->date->format('H:i') }} Uhr</p>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="p-8 text-center bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 text-zinc-500">
+                                Keine anstehenden Workshops.
+                            </div>
+                        @endforelse
+                    </div>
                 </div>
-    
-                <div class="space-y-3">
-                    @forelse($upcomingWorkshops as $workshop)
-                        <div class="flex items-center p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl shadow-sm">
-                             <div class="flex-shrink-0 w-12 text-center mr-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
-                                <div class="text-xs text-zinc-500 uppercase">{{ $workshop->date->translatedFormat('M') }}</div>
-                                <div class="text-lg font-bold text-zinc-900 dark:text-zinc-100">{{ $workshop->date->format('d') }}</div>
+
+                <!-- Upcoming Birthdays -->
+                <div class="space-y-4">
+                     <div class="flex items-center justify-between">
+                        <flux:heading size="lg">Geburtstage</flux:heading>
+                        <div class="h-8"></div> <!-- Spacer -->
+                    </div>
+        
+                    <div class="space-y-3">
+                        @forelse($upcomingBirthdays as $client)
+                            <div class="flex items-center p-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl shadow-sm">
+                                 <div class="flex-shrink-0 w-12 text-center mr-4 p-2 bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 rounded-lg">
+                                    <flux:icon name="cake" class="size-6 mx-auto" />
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-zinc-900 dark:text-zinc-100">{{ $client->name }}</h4>
+                                    <p class="text-xs text-zinc-500">
+                                        wird {{ $client->dob->age + 1 }} • {{ $client->dob->format('d.m.') }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-semibold text-zinc-900 dark:text-zinc-100">{{ $workshop->title }}</h4>
-                                <p class="text-sm text-zinc-500">{{ $workshop->location ?? 'Online' }} • {{ $workshop->date->format('H:i') }} Uhr</p>
+                        @empty
+                            <div class="p-8 text-center bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 text-zinc-500">
+                                Keine Geburtstage in Kürze.
                             </div>
-                            <flux:badge size="sm" color="zinc">{{ $workshop->participants_count ?? 0 }} Teilnehmer</flux:badge>
-                        </div>
-                    @empty
-                        <div class="p-8 text-center bg-zinc-50 dark:bg-zinc-800/50 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 text-zinc-500">
-                            Keine anstehenden Workshops.
-                        </div>
-                    @endforelse
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Quick Actions & Sidebar -->
         <div class="space-y-6">
+            <!-- Today's Staff -->
+            <div class="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-sm">
+                <flux:heading size="md" class="mb-4">Wer ist heute da?</flux:heading>
+                <div class="space-y-3">
+                    @forelse($todaysShifts as $shift)
+                        <div class="flex items-center gap-3">
+                            <div class="size-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-600 dark:text-zinc-400">
+                                {{ $shift->user->initials() }}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">{{ $shift->user->name }}</p>
+                                <p class="text-xs text-zinc-500">{{ $shift->start_time->format('H:i') }} - {{ $shift->end_time->format('H:i') }}</p>
+                            </div>
+                             <div class="size-2 rounded-full {{ $shift->start_time->isPast() && $shift->end_time->isFuture() ? 'bg-green-500 animate-pulse' : 'bg-zinc-300 dark:bg-zinc-600' }}"></div>
+                        </div>
+                    @empty
+                        <p class="text-sm text-zinc-500 italic">Keine Dienste heute eingetragen.</p>
+                    @endforelse
+                </div>
+            </div>
+
             <div class="space-y-4">
                 <flux:heading size="lg">Schnellzugriff</flux:heading>
                 
                 <div class="grid gap-3">
+                    <flux:button :href="route('tasks.index')" icon="check-circle" variant="filled" class="w-full justify-start py-4 h-auto bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">
+                        <div class="text-left ml-2">
+                            <div class="font-semibold">Aufgaben prüfen</div>
+                            <div class="text-xs opacity-75 font-normal">Offene To-Dos erledigen</div>
+                        </div>
+                    </flux:button>
+                    
                     <flux:button :href="route('daily-logs.create')" icon="pencil-square" variant="filled" class="w-full justify-start py-4 h-auto">
                         <div class="text-left ml-2">
                             <div class="font-semibold">Tagesdoku schreiben</div>

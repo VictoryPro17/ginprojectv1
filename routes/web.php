@@ -47,4 +47,8 @@ Route::middleware(['auth'])->group(function () {
     
     Volt::route('workshops', 'workshops.index')->name('workshops.index');
     Volt::route('workshops/create', 'workshops.create')->name('workshops.create');
+
+    Volt::route('handover', 'handover-notes.index')->name('handover.index');
+    Volt::route('tasks', 'tasks.index')->name('tasks.index');
+    Volt::route('contacts', 'contacts.index')->name('contacts.index');
 });

@@ -116,8 +116,15 @@ class extends Component {
                                 'yellow' => 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-100 dark:border-yellow-800',
                                 default => 'bg-zinc-50 dark:bg-zinc-800 border-zinc-100 dark:border-zinc-700',
                             };
+                            $type_label = match($shift->type) {
+                                'work' => 'Arbeit',
+                                'vacation' => 'Urlaub',
+                                'sick' => 'Krank',
+                                'training' => 'Fortbildung',
+                                default => $shift->type
+                            };
                         @endphp
-                        <div class="text-xs p-1.5 rounded {{ $bg }} border truncate cursor-pointer hover:opacity-80 transition" title="{{ $shift->user->name }}: {{ ucfirst($shift->type) }}">
+                        <div class="text-xs p-1.5 rounded {{ $bg }} border truncate cursor-pointer hover:opacity-80 transition" title="{{ $shift->user->name }}: {{ $type_label }}">
                             <div class="font-medium truncate">{{ $shift->user->initials() }}</div>
                             <div class="text-[0.6rem] opacity-75">{{ $shift->start_time->format('H:i') }} - {{ $shift->end_time->format('H:i') }}</div>
                         </div>
@@ -128,6 +135,6 @@ class extends Component {
     </div>
     
     <div class="text-right">
-            <flux:button icon="printer" variant="ghost" disabled>PDF Export (Coming Soon)</flux:button>
+            <flux:button icon="printer" variant="ghost" disabled>PDF Export (Demnächst)</flux:button>
     </div>
 </div>
