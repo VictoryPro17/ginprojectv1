@@ -40,21 +40,17 @@ A modern, full-featured workshop and shift management platform built with **Lara
 
 ## � Screenshots
 
-### Login & Landing Page
-![Landing Page](screenshots/01-landing-page.png)
-*Professional landing page with login and registration options*
+### Home Page
+![Home Page](screenshots/01-landing-page.png)
 
 ### Dashboard
 ![Dashboard](screenshots/02-dashboard.png)
-*Main dashboard showing overview, active employees, and quick actions*
 
-### Create Shift
+### Create Service
 ![Create Shift](screenshots/03-create-shift.png)
-*Form to create new shifts with start/end times and employee assignment*
 
 ### Daily Log Entry
 ![Daily Log](screenshots/04-daily-log.png)
-*Comprehensive daily logging with vital statistics, activities, and special notes*
 
 ---
 
