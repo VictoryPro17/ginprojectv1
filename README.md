@@ -40,16 +40,15 @@ A modern, full-featured workshop and shift management platform built with **Lara
 
 ## � Screenshots
 
-### Home Page
+
 ![Home Page](screenshots/01-landing-page.png)
 
-### Dashboard
+
 ![Dashboard](screenshots/02-dashboard.png)
 
-### Create Service
+
 ![Create Shift](screenshots/03-create-shift.png)
 
-### Daily Log Entry
 ![Daily Log](screenshots/04-daily-log.png)
 
 ---
