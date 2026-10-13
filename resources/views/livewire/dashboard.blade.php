@@ -90,7 +90,7 @@ class extends Component {
         <!-- Stats cards remain same -->
         <div class="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-sm">
             <div class="flex items-center gap-3">
-                <div class="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg">
+                <div class="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg">
                     <flux:icon name="users" class="size-6" />
                 </div>
                 <div>
@@ -102,7 +102,7 @@ class extends Component {
 
         <div class="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-sm">
             <div class="flex items-center gap-3">
-                <div class="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-lg">
+                <div class="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg">
                     <flux:icon name="identification" class="size-6" />
                 </div>
                 <div>
@@ -114,7 +114,7 @@ class extends Component {
 
         <div class="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-sm">
             <div class="flex items-center gap-3">
-                <div class="p-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-lg">
+                <div class="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg">
                     <flux:icon name="document-text" class="size-6" />
                 </div>
                 <div>
@@ -126,7 +126,7 @@ class extends Component {
 
         <div class="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-sm">
             <div class="flex items-center gap-3">
-                <div class="p-2 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-lg">
+                <div class="p-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg">
                     <flux:icon name="calendar" class="size-6" />
                 </div>
                 <div>
@@ -277,7 +277,7 @@ class extends Component {
                 <flux:heading size="lg">Schnellzugriff</flux:heading>
                 
                 <div class="grid gap-3">
-                    <flux:button :href="route('tasks.index')" icon="check-circle" variant="filled" class="w-full justify-start py-4 h-auto bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">
+                    <flux:button :href="route('tasks.index')" icon="check-circle" variant="filled" class="w-full justify-start py-4 h-auto">
                         <div class="text-left ml-2">
                             <div class="font-semibold">Aufgaben prüfen</div>
                             <div class="text-xs opacity-75 font-normal">Offene To-Dos erledigen</div>
@@ -308,10 +308,15 @@ class extends Component {
                     </flux:button>
                 </div>
                 
-                <div class="mt-6 p-4 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md">
-                    <div class="flex flex-col gap-2">
-                        <span class="text-xs font-bold uppercase tracking-widest opacity-75">Tipp des Tages</span>
-                        <p class="text-sm font-medium">"Dokumentation ist der Schlüssel zu einer qualitativ hochwertigen Betreuung. Vergiss nicht, besondere Vorkommnisse sofort zu notieren!"</p>
+                <div class="mt-6 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/60 p-4">
+                    <div class="flex items-start gap-3">
+                        <div class="rounded-lg bg-zinc-100 dark:bg-zinc-800 p-2 text-zinc-500 dark:text-zinc-400">
+                            <flux:icon name="light-bulb" class="size-5" />
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Tipp des Tages</span>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-300">Dokumentation ist der Schlüssel zu einer qualitativ hochwertigen Betreuung. Besondere Vorkommnisse am besten sofort notieren.</p>
+                        </div>
                     </div>
                 </div>
             </div>

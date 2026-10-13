@@ -3,7 +3,7 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
+    <body class="min-h-screen bg-white antialiased dark:bg-zinc-800">
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
@@ -12,17 +12,23 @@
             </a>
 
             <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Plattform')" class="grid">
+                <flux:navlist.group :heading="__('Übersicht')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Betreuung')" class="grid">
                     <flux:navlist.item icon="users" :href="route('clients.index')" :current="request()->routeIs('clients.*')" wire:navigate>{{ __('Klienten') }}</flux:navlist.item>
-                    <flux:navlist.item icon="identification" :href="route('staff.index')" :current="request()->routeIs('staff.*')" wire:navigate>{{ __('Mitarbeiter') }}</flux:navlist.item>
                     <flux:navlist.item icon="user-group" :href="route('groups.index')" :current="request()->routeIs('groups.*')" wire:navigate>{{ __('Gruppen') }}</flux:navlist.item>
                     <flux:navlist.item icon="document-text" :href="route('daily-logs.index')" :current="request()->routeIs('daily-logs.*')" wire:navigate>{{ __('Tagesdoku') }}</flux:navlist.item>
                     <flux:navlist.item icon="clipboard-document-list" :href="route('handover.index')" :current="request()->routeIs('handover.*')" wire:navigate>{{ __('Übergabebuch') }}</flux:navlist.item>
                     <flux:navlist.item icon="check-circle" :href="route('tasks.index')" :current="request()->routeIs('tasks.*')" wire:navigate>{{ __('Aufgaben') }}</flux:navlist.item>
-                    <flux:navlist.item icon="phone" :href="route('contacts.index')" :current="request()->routeIs('contacts.*')" wire:navigate>{{ __('Kontakte') }}</flux:navlist.item>
+                </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Organisation')" class="grid">
+                    <flux:navlist.item icon="identification" :href="route('staff.index')" :current="request()->routeIs('staff.*')" wire:navigate>{{ __('Mitarbeiter') }}</flux:navlist.item>
                     <flux:navlist.item icon="calendar" :href="route('shifts.index')" :current="request()->routeIs('shifts.*')" wire:navigate>{{ __('Dienstplan') }}</flux:navlist.item>
                     <flux:navlist.item icon="academic-cap" :href="route('workshops.index')" :current="request()->routeIs('workshops.*')" wire:navigate>{{ __('Workshops') }}</flux:navlist.item>
+                    <flux:navlist.item icon="phone" :href="route('contacts.index')" :current="request()->routeIs('contacts.*')" wire:navigate>{{ __('Kontakte') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

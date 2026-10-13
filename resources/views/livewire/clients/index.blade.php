@@ -42,7 +42,7 @@ class extends Component {
 
     <flux:input wire:model.live="search" icon="magnifying-glass" placeholder="Suche..." class="max-w-sm" />
 
-    <div class="overflow-hidden border border-zinc-200 rounded-lg dark:border-zinc-700">
+    <div class="overflow-hidden border border-zinc-200 rounded-xl shadow-sm dark:border-zinc-700">
         <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
             <thead class="bg-zinc-50 dark:bg-zinc-800">
                 <tr>
@@ -55,7 +55,7 @@ class extends Component {
             </thead>
             <tbody class="bg-white divide-y divide-zinc-200 dark:bg-zinc-900 dark:divide-zinc-700">
                 @foreach ($clients as $client)
-                    <tr wire:key="{{ $client->id }}">
+                    <tr wire:key="{{ $client->id }}" class="transition hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
                         <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-zinc-900 dark:text-zinc-100">{{ $client->name }}</td>
                         <td class="px-6 py-4 text-sm whitespace-nowrap text-zinc-500 dark:text-zinc-400">
                             @if($client->group)

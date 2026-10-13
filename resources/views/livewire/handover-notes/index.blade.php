@@ -77,8 +77,8 @@ class extends Component {
 
     <!-- Filter Tabs -->
     <div class="flex gap-2 border-b border-zinc-200 dark:border-zinc-700 pb-2">
-        <button wire:click="setFilter('active')" class="px-4 py-2 text-sm font-medium {{ $filter !== 'completed' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-zinc-500 hover:text-zinc-700' }}">Offen</button>
-        <button wire:click="setFilter('completed')" class="px-4 py-2 text-sm font-medium {{ $filter === 'completed' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-zinc-500 hover:text-zinc-700' }}">Erledigt / Archiv</button>
+        <button wire:click="setFilter('active')" class="px-4 py-2 text-sm font-medium transition {{ $filter !== 'completed' ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400' : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300' }}">Offen</button>
+        <button wire:click="setFilter('completed')" class="px-4 py-2 text-sm font-medium transition {{ $filter === 'completed' ? 'text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400' : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300' }}">Erledigt / Archiv</button>
     </div>
 
     <div class="space-y-4">

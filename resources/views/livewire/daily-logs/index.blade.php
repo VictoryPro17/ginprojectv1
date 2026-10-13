@@ -48,59 +48,76 @@ class extends Component {
         <flux:input wire:model.live="date" type="date" class="sm:max-w-xs" />
     </div>
 
-    <div class="space-y-4">
-        @foreach ($logs as $log)
-            <div class="p-4 border rounded-xl border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-sm transition hover:shadow-md">
-                <div class="flex justify-between items-start mb-2">
-                    <div>
-                        <span class="font-bold text-lg">{{ $log->client->name }}</span>
-                        <span class="text-zinc-500 text-sm ml-2">{{ $log->date->format('d.m.Y') }}</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-sm text-zinc-500">von {{ $log->user->name }}</span>
-                            @if($log->mood)
-                            <flux:badge>{{ $log->mood }}</flux:badge>
+    <div class="space-y-1">
+        @php $lastDate = null; @endphp
+        @forelse ($logs as $log)
+            @php $d = $log->date->copy()->startOfDay(); @endphp
+            @if ($lastDate === null || ! $d->equalTo($lastDate))
+                @php
+                    $lastDate = $d;
+                    $dateLabel = $d->isToday() ? 'Heute' : ($d->isYesterday() ? 'Gestern' : $d->format('d.m.Y'));
+                @endphp
+                <div class="flex items-center gap-3 pt-6 pb-2 first:pt-0">
+                    <flux:heading size="sm" class="whitespace-nowrap text-zinc-500 dark:text-zinc-400">{{ $dateLabel }}</flux:heading>
+                    <div class="h-px flex-1 bg-zinc-200 dark:bg-zinc-800"></div>
+                </div>
+            @endif
+
+            <div class="relative ml-1 border-l-2 border-zinc-100 dark:border-zinc-800 pl-6 pb-4">
+                <span class="absolute -left-[7px] top-4 size-3 rounded-full ring-4 ring-white dark:ring-zinc-800 {{ $log->special_incidents ? 'bg-red-500' : 'bg-blue-500' }}"></span>
+
+                <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 shadow-sm transition hover:shadow-md">
+                    <div class="flex flex-wrap items-start justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <div class="flex size-9 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 text-sm font-semibold text-zinc-600 dark:text-zinc-300">
+                                {{ strtoupper(mb_substr($log->client->name, 0, 1)) }}
+                            </div>
+                            <div class="leading-tight">
+                                <div class="font-semibold text-zinc-900 dark:text-zinc-100">{{ $log->client->name }}</div>
+                                <div class="text-xs text-zinc-500">von {{ $log->user->name }}</div>
+                            </div>
+                        </div>
+                        @if ($log->mood)
+                            <flux:badge size="sm" color="zinc">{{ $log->mood }}</flux:badge>
                         @endif
                     </div>
-                </div>
-                
-                @if($log->activity)
-                <div class="mb-2">
-                    <span class="font-semibold text-sm text-zinc-600 dark:text-zinc-400">Aktivität:</span>
-                    <p class="text-zinc-800 dark:text-zinc-200">{{ $log->activity }}</p>
-                </div>
-                @endif
-                
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3 p-3 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg text-sm border border-zinc-100 dark:border-zinc-800">
-                    <div>
-                        <span class="text-zinc-500">Trinken:</span>
-                        <span class="font-medium ml-1">{{ $log->hydration_ml ? $log->hydration_ml . ' ml' : '-' }}</span>
-                    </div>
-                    <div>
-                        <span class="text-zinc-500">Stuhlgang:</span>
-                        <span class="font-medium ml-1">{{ $log->stool_passed ? 'Ja' : 'Nein' }}</span>
-                    </div>
-                    <div>
-                        <span class="text-zinc-500">Urin/KV:</span>
-                        <span class="font-medium ml-1">{{ $log->urine_desc ?: '-' }}</span>
-                    </div>
-                </div>
 
-                @if($log->special_incidents)
-                <div class="mt-2 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-red-700 dark:text-red-400 border border-red-100 dark:border-red-900/30">
-                    <div class="flex items-center gap-2 mb-1">
-                        <flux:icon name="exclamation-triangle" class="size-4" />
-                        <span class="font-bold text-xs uppercase tracking-wide">Besonderheit</span>
+                    @if ($log->activity)
+                        <div class="mt-3">
+                            <span class="text-xs font-semibold uppercase tracking-wide text-zinc-400">Aktivität</span>
+                            <p class="text-sm text-zinc-700 dark:text-zinc-200">{{ $log->activity }}</p>
+                        </div>
+                    @endif
+
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <span class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/60 px-2.5 py-1 text-xs text-zinc-600 dark:text-zinc-300">
+                            <span class="text-zinc-400">Trinken:</span>
+                            <span class="font-medium">{{ $log->hydration_ml ? $log->hydration_ml . ' ml' : '–' }}</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/60 px-2.5 py-1 text-xs text-zinc-600 dark:text-zinc-300">
+                            <span class="text-zinc-400">Stuhlgang:</span>
+                            <span class="font-medium">{{ $log->stool_passed ? 'Ja' : 'Nein' }}</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 rounded-lg border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/60 px-2.5 py-1 text-xs text-zinc-600 dark:text-zinc-300">
+                            <span class="text-zinc-400">Urin/KV:</span>
+                            <span class="font-medium">{{ $log->urine_desc ?: '–' }}</span>
+                        </span>
                     </div>
-                    <p class="text-sm">{{ $log->special_incidents }}</p>
+
+                    @if ($log->special_incidents)
+                        <div class="mt-3 flex gap-2 rounded-lg border border-red-100 dark:border-red-900/30 bg-red-50 dark:bg-red-900/20 p-3 text-red-700 dark:text-red-400">
+                            <flux:icon name="exclamation-triangle" class="mt-0.5 size-4 shrink-0" />
+                            <div>
+                                <div class="text-xs font-bold uppercase tracking-wide">Besonderheit</div>
+                                <p class="text-sm">{{ $log->special_incidents }}</p>
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                @endif
             </div>
-        @endforeach
-        
-        @if($logs->isEmpty())
+        @empty
             <div class="text-center py-10 text-zinc-500">Keine Einträge gefunden.</div>
-        @endif
+        @endforelse
     </div>
 
     <div class="mt-4">

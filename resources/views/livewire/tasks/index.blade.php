@@ -110,7 +110,7 @@ class extends Component {
                     <div class="flex items-center gap-2">
                         @if($task->assignedTo)
                             <flux:tooltip content="Zugewiesen an {{ $task->assignedTo->name }}">
-                                <div class="size-6 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-[10px] font-bold text-indigo-700 dark:text-indigo-300">
+                                <div class="size-6 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-[10px] font-bold text-blue-700 dark:text-blue-300">
                                     {{ $task->assignedTo->initials() }}
                                 </div>
                             </flux:tooltip>

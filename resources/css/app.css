@@ -24,7 +24,7 @@
 }
 
 @theme {
-    --color-accent: var(--color-blue-500);
+    --color-accent: var(--color-blue-600);
     --color-accent-content: var(--color-blue-600);
     --color-accent-foreground: var(--color-white);
 }
@@ -45,6 +45,12 @@
     ::backdrop,
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
+    }
+
+    html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
     }
 }
 
